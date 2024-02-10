@@ -55,15 +55,14 @@ const nuevoProducto = ref<IProductos>({
 const productosMostrar = ref<IProductos[]>([]);
 productosMostrar.value = ProductosData;
 
-// Estado para almacenar el ID del producto seleccionado
 const Sombra = ref<number | null>(null);
 
-// Función para seleccionar un producto al hacer clic en él
+
 const seleccionarProducto = (id: number) => {
     Sombra.value = id;
 };
 
-// Función para encontrar el último ID y establecer el próximo ID automáticamente
+
 const obtenerProximoId = () => {
   const ultimoId = productosMostrar.value.reduce((maxId, producto) => {
     return producto.id > maxId ? producto.id : maxId;
@@ -71,7 +70,7 @@ const obtenerProximoId = () => {
   return ultimoId + 1;
 };
 
-// Función para agregar un nuevo producto
+
 const agregarNuevoProducto = () => {
   const existe = productosMostrar.value.some(producto => (
     producto.artículo === nuevoProducto.value.artículo &&
@@ -81,11 +80,8 @@ const agregarNuevoProducto = () => {
   ));
   
   if (!existe) {
-    // Obtener el próximo ID automáticamente
     const id = obtenerProximoId();
-    // Agregar el nuevo producto con el ID generado automáticamente
     productosMostrar.value.push({ ...nuevoProducto.value, id });
-    // Limpiar el formulario después de agregar
     nuevoProducto.value = { id: 0, artículo: '', unidad: 0, peso: 0, precio: 0 };
   } else {
     alert('Por favor, complete todos los campos o su producto ya exite en la lista.');
